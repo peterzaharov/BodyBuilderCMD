@@ -16,16 +16,16 @@ namespace BodyBuilder.CMD
             Console.WriteLine(resourceManager.GetString("Greeting", culture));
 
             Console.Write(resourceManager.GetString("EnterUserName", culture));
-            var name = Console.ReadLine();
+            string name = Console.ReadLine();
 
-            var userController = new UserController(name);
-            var eatingController = new MealController(userController.CurrentUser);
-            var exercisesController = new ExerciseController(userController.CurrentUser);
+            UserController userController = new UserController(name);
+            MealController eatingController = new MealController(userController.CurrentUser);
+            ExerciseController exercisesController = new ExerciseController(userController.CurrentUser);
 
             if (userController.IsNewUser)
             {
                 Console.Write(resourceManager.GetString("EnterUserGender", culture));
-                var gender = Console.ReadLine();
+                string gender = Console.ReadLine();
                 DateTime dateOfBirth = ParseDateTime("дата рождения");
                 double weight = ParseDouble("вес");
                 double height = ParseDouble("рост");
@@ -40,7 +40,7 @@ namespace BodyBuilder.CMD
                 Console.WriteLine("E - ввести прием пищи.");
                 Console.WriteLine("A - внести упражнение.");
                 Console.WriteLine("Q - выход.");
-                var key = Console.ReadKey();
+                ConsoleKeyInfo key = Console.ReadKey();
                 Console.WriteLine();
 
                 switch (key.Key)
@@ -74,13 +74,13 @@ namespace BodyBuilder.CMD
         private static (DateTime Begin, DateTime End, Activity Activity) EnterExercise()
         {
             Console.WriteLine("Введите название упражения: ");
-            var exercise = Console.ReadLine();
-            var energy = ParseDouble("расход энергии в минуту");
+            string exercise = Console.ReadLine();
+            double energy = ParseDouble("расход энергии в минуту");
 
-            var begin = ParseDateTime("начало упражения");
-            var end = ParseDateTime("окончание упражения");
+            DateTime begin = ParseDateTime("начало упражения");
+            DateTime end = ParseDateTime("окончание упражения");
 
-            var activity = new Activity(exercise, energy);
+            Activity activity = new Activity(exercise, energy);
 
             return (begin, end, activity);
         }
@@ -88,16 +88,16 @@ namespace BodyBuilder.CMD
         private static (Food Food, double Weight) EnterEating()
         {
             Console.Write("Введите имя продукта: ");
-            var food = Console.ReadLine();
+            string food = Console.ReadLine();
 
-            var calories = ParseDouble("калорийность");
-            var proteins = ParseDouble("белки");
-            var fats = ParseDouble("жиры");
-            var carbohydrates = ParseDouble("углеводы");
+            double calories = ParseDouble("калорийность");
+            double proteins = ParseDouble("белки");
+            double fats = ParseDouble("жиры");
+            double carbohydrates = ParseDouble("углеводы");
 
-            var weight = ParseDouble("вес порции");
+            double weight = ParseDouble("вес порции");
 
-            var product = new Food(food, proteins, fats, carbohydrates, calories);
+            Food product = new Food(food, proteins, fats, carbohydrates, calories);
 
             return (Food: product, Weight: weight);
         }
